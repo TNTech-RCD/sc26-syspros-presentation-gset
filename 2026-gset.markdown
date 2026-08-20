@@ -129,7 +129,7 @@ x
 
 - Two Stockfish MPI engines playing within a very short time limit.
 - Stockfish win/loss ratio scales with resources given (could be biased by at least 20:1 on their cluster).
-- Mike wrote a quick and dirty text visualization of chess games inabout 130 lines of Python using [`chess`](https://pypi.org/project/chess/) and [`asciimatics`](https://pypi.org/project/asciimatics/). Python script also ran MPI Stockfish via `srun` jobs.
+- Mike wrote a quick and dirty text visualization of chess games in about 130 lines of Python using [`chess`](https://pypi.org/project/chess/) and [`asciimatics`](https://pypi.org/project/asciimatics/). Python script also ran MPI Stockfish via `srun` jobs.
 
 :::
 ::: {.column width=50%}
@@ -142,14 +142,14 @@ x
 ## 2024: Machine learning for Lunar Lander
 
 - Using [`gymnasium`](https://gymnasium.farama.org) for game engine
-- Solution spaces is small
-  - Observations: 2 positions, 2 velocities, angle, angular velocity, whether each leg has touched down
+- Solution space is small
+  - Observations: 2 coordinates, 2 velocities, lander angle, lander angular velocity, whether each leg has touched down
   - Actions: wait, fire left engine, fire main engine, fire right engine
 - Actor-critic and deep Q-learning algorithms
 - Performance comparison of ML training on their cluster vs the Tech cluster
 - Interactive version of Lunar Lander showed how difficult it is for a human to control:
   - purely binary on/off control of engines, has to be toggled extremely quickly to maintain control
-  - bug in gymnasium code made lander more difficult for humans to control: side thrusters change positions depending on lander angle
+  - bug in `gymnasium` code: side thrusters change positions depending on lander angle
 - Even a naive reinforcement learning algorithm can adapt around both of those
 
 ## 2025: Machine learning for Tetris
