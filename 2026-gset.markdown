@@ -141,7 +141,7 @@ x
 
 ## 2024: Machine learning for Lunar Lander
 
-- Using [`gymnasius`](https://gymnasium.farama.org) for game engine
+- Using [`gymnasium`](https://gymnasium.farama.org) for game engine
 - Solution spaces is small
   - Observations: 2 positions, 2 velocities, angle, angular velocity, whether each leg has touched down
   - Actions: wait, fire left engine, fire main engine, fire right engine
