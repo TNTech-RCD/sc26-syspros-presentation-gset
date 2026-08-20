@@ -18,9 +18,68 @@ date: 2026-11-15 (or 16 or 20)
 
 ## Subtopic 1.1
 
-### Slide 1.1.1
+### Governor's School for Emerging Technologies
 
-x
+::: {.columns align=center}
+
+::: {.column width=50%}
+![2023 GSET HPC students at Tech cluster](figures/at-tech-cluster.jpg)
+:::
+
+::: {.column width=50%}
+- One of 11 programs at TN public universities for rising 11th and 12th grade students
+- 3 week duration, students earn 1 college credit hour of "Introduction to Emerging Technologies"
+- Around 36 contact hours to learn about a research area, HPC impacts two areas:
+  - Molecular dynamics for drug discovery
+  - Introduction to HPC (since 2023)
+- Each group of students present their research area to the other groups and faculty/staff
+:::
+
+:::
+
+### "Introduction to HPC" Research Area
+
+::: {.columns align=center}
+
+::: {.column width=50%}
+![2023 GSET HPC students at their cluster](figures/at-student-cluster.jpg)
+:::
+
+::: {.column width=50%}
+Major topics and activities have included:
+
+- Intro to the Unix Shell (Software Carpentry)
+- Unplugged exercise, sorting craft beads by color with 1 or more students
+- Building a basic HPC with OpenHPC:
+  - virtually on their own laptops,
+  - physically with cast-off desktops
+- Just enough networking to understand DHCP/PXE for booting their compute nodes
+- Basic analysis of algorithms and speedup factors
+- Concepts of OpenMP and MPI
+- Concepts of machine learning and neural networks
+
+:::
+
+:::
+
+### Final Projects/Presentations/Live Demos
+
+::: {.columns align=top}
+
+::: {.column width=50%}
+#### 2023: Stockfish chess engine
+- Two Stockfish MPI engines playing within a time limit
+- Stockfish win/loss ratio scales with resources given (could be biased by at least 20:1 on their cluster)
+:::
+
+::: {.column width=50%}
+#### 2024: Machine learning for Lunar Lander
+- Lander was unintentionally more difficult for humans to control due to side thrusters moving depending on lander angle
+- Actor-critic and deep Q-learning algorithms
+- Performance comparison of ML training on their cluster vs the Tech cluster
+:::
+
+:::
 
 ## Subtopic 1.2
 
@@ -37,12 +96,6 @@ x
 ## Subtopic 1.4
 
 ### Slide 1.4.1
-
-x
-
-## Subtopic 1.5
-
-### Slide 1.5.1
 
 x
 
@@ -72,12 +125,6 @@ x
 
 x
 
-## Subtopic 2.5
-
-### Slide 2.5.1
-
-x
-
 # Topic 3
 
 ## Subtopic 3.1
@@ -104,12 +151,6 @@ x
 
 x
 
-## Subtopic 3.5
-
-### Slide 3.5.1
-
-x
-
 # Topic 4
 
 ## Subtopic 4.1
@@ -133,44 +174,6 @@ x
 ## Subtopic 4.4
 
 ### Slide 4.4.1
-
-x
-
-## Subtopic 4.5
-
-### Slide 4.5.1
-
-x
-
-# Topic 5
-
-## Subtopic 5.1
-
-### Slide 5.1.1
-
-x
-
-## Subtopic 5.2
-
-### Slide 5.2.1
-
-x
-
-## Subtopic 5.3
-
-### Slide 5.3.1
-
-x
-
-## Subtopic 5.4
-
-### Slide 5.4.1
-
-x
-
-## Subtopic 5.5
-
-### Slide 5.5.1
 
 x
 
