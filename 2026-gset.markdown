@@ -18,7 +18,7 @@ date: 2026-11-15 (or 16 or 20)
 
 ## Overview
 
-### Governor's School for Emerging Technologies
+### Governor's School for Emerging Technologies (GSET)
 
 ::: {.columns align=center}
 
@@ -27,15 +27,16 @@ date: 2026-11-15 (or 16 or 20)
 :::
 
 ::: {.column width=50%}
-- One of 11 programs at TN public universities for rising 11th and 12th grade students
-- 3 week duration, students earn 1 college credit hour of "Introduction to Emerging Technologies"
-- Around 36 contact hours to learn about a research area, HPC impacts two areas:
-  - Molecular dynamics for drug discovery
-  - Introduction to HPC (since 2023)
-- Each group of students present their research area to the other groups and faculty/staff
+- One of 11 Governor's Schools at TN public universities for rising 11th and 12th grade students nominated by their school faculty/staff
+- Usually 35--40 GSET students
+- 3 week duration, time spent on:
+  - mornings: "Introduction to Emerging Technologies" with activities including physical engineering design, human-centered software design, data science, and cybersecurity (all students, 1 credit hour).
+  - afternoons: learning about a research area (usually groups of 6--7 students)
 :::
 
 :::
+
+## "Introduction to HPC" Research Area
 
 ### "Introduction to HPC" Research Area
 
@@ -46,10 +47,32 @@ date: 2026-11-15 (or 16 or 20)
 :::
 
 ::: {.column width=50%}
-Major topics and activities have included:
 
+- Pre-2023, the HPC group was led by a CS faculty member and more focused on parallel programming on Raspberry Pis.
+- Our version of HPC has been a research group since 2023, and goes a mile wide and an inch deep on applications and implementations of HPC.
+- Our students decide on a final project that needs lots of computation.
+- On last day of program, each group presents their research area and project to the other groups and faculty/staff.
+
+:::
+:::
+
+## What We Spend Time On
+
+### What We Spend Time On
+
+It's never been the same across years, but major topics and activities have included:
+
+::: {.columns align=top}
+
+::: {.column width=50%}
+
+- Concepts of parallel and distributed computing:
+  - The power wall and why we need multi-core architectures
+  - Amdahl's law, speedup factors, scaling
+  - Unplugged exercise: sorting craft beads by color with 1 or more students
 - Intro to the Unix Shell (Software Carpentry)
-- Unplugged exercise, sorting craft beads by color with 1 or more students
+:::
+::: {.column width=50%}
 - Building a basic HPC with OpenHPC:
   - virtually on their own laptops,
   - physically with cast-off desktops
@@ -57,49 +80,20 @@ Major topics and activities have included:
 - Basic analysis of algorithms and speedup factors
 - Concepts of OpenMP and MPI
 - Concepts of machine learning and neural networks
-
+:::
 :::
 
-:::
 
-### Final Projects/Presentations/Live Demos
+**New for 2026: careers in research computing, CaRCC-style facings**
 
-::: {.columns align=top}
+## Final Projects/Presentations/Live Demos
 
-::: {.column width=50%}
-#### 2023: Stockfish chess engine
-- Two Stockfish MPI engines playing within a time limit
-- Stockfish win/loss ratio scales with resources given (could be biased by at least 20:1 on their cluster)
-:::
+- 2023: Stockfish chess engine using MPI on student-built cluster
+- 2024: machine learning for Lunar Lander
+- 2025: machine learning for Tetris
+- 2026: image recognition (MNIST, Let's Draw)
 
-::: {.column width=50%}
-#### 2024: Machine learning for Lunar Lander
-- Lander was unintentionally more difficult for humans to control due to side thrusters moving depending on lander angle
-- Actor-critic and deep Q-learning algorithms
-- Performance comparison of ML training on their cluster vs the Tech cluster
-:::
-
-:::
-
-## Subtopic 1.2
-
-### Slide 1.2.1
-
-x
-
-## Subtopic 1.3
-
-### Slide 1.3.1
-
-x
-
-## Subtopic 1.4
-
-### Slide 1.4.1
-
-x
-
-# Topic 2
+# What We Covered, and How
 
 ## Subtopic 2.1
 
@@ -125,56 +119,48 @@ x
 
 x
 
-# Topic 3
+# What We Learned From Projects
 
-## Subtopic 3.1
+## 2023: Stockfish chess engine
 
-### Slide 3.1.1
+::: {.columns align=top}
 
-x
+::: {.column width=50%}
 
-## Subtopic 3.2
+- Two Stockfish MPI engines playing within a very short time limit.
+- Stockfish win/loss ratio scales with resources given (could be biased by at least 20:1 on their cluster).
+- Mike wrote a quick and dirty text visualization of chess games inabout 130 lines of Python using [`chess`](https://pypi.org/project/chess/) and [`asciimatics`](https://pypi.org/project/asciimatics/). Python script also ran MPI Stockfish via `srun` jobs.
 
-### Slide 3.2.1
+:::
+::: {.column width=50%}
 
-x
+![MPI Stockfish visualizer](figures/asciimatic-chess.png)
 
-## Subtopic 3.3
+:::
+:::
 
-### Slide 3.3.1
+## 2024: Machine learning for Lunar Lander
 
-x
+- Using [`gymnasius`](https://gymnasium.farama.org) for game engine
+- Solution spaces is small
+  - Observations: 2 positions, 2 velocities, angle, angular velocity, whether each leg has touched down
+  - Actions: wait, fire left engine, fire main engine, fire right engine
+- Actor-critic and deep Q-learning algorithms
+- Performance comparison of ML training on their cluster vs the Tech cluster
+- Interactive version of Lunar Lander showed how difficult it is for a human to control:
+  - purely binary on/off control of engines, has to be toggled extremely quickly to maintain control
+  - bug in gymnasium code made lander more difficult for humans to control: side thrusters change positions depending on lander angle
+- Even a naive reinforcement learning algorithm can adapt around both of those
 
-## Subtopic 3.4
+## 2025: Machine learning for Tetris
 
-### Slide 3.4.1
+- This one was much harder than we expected
+- Enormously larger solution space than Lunar Lander
 
-x
+## 2026: Image recognition (MNIST, Let's Draw)
 
-# Topic 4
+- This one was also harder than we expected
 
-## Subtopic 4.1
-
-### Slide 4.1.1
-
-x
-
-## Subtopic 4.2
-
-### Slide 4.2.1
-
-x
-
-## Subtopic 4.3
-
-### Slide 4.3.1
-
-x
-
-## Subtopic 4.4
-
-### Slide 4.4.1
+# Wrapping Up
 
 x
-
-
