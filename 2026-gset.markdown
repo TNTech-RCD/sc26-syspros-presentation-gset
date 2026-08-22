@@ -9,7 +9,8 @@ shortauthor:
   - Mike Renfro, Sharon Colson, Jim Moroney, Trevor Clark
 institute:
   - Research Computing and Data, Information Technology Services, Tennessee Tech University
-title: HPC for Advanced High School Students at a Summer Program
+title: Teaching HPC to Advanced High School Students at a Summer Program
+shorttitle: Teaching HPC at an Advanced High School Student Program
 subtitle: Governor's School for Emerging Technologies
 date: 2026-11-15 (or 16 or 20)
 ---
@@ -91,33 +92,255 @@ It's never been the same across years, but major topics and activities have incl
 - 2023: Stockfish chess engine using MPI on student-built cluster
 - 2024: machine learning for Lunar Lander
 - 2025: machine learning for Tetris
-- 2026: image recognition (MNIST, Let's Draw)
+- 2026: image recognition (MNIST, Google's "Quick, Draw!")
 
 # What We Covered, and How
 
-## Subtopic 2.1
+## Concepts of HPC
 
-### Slide 2.1.1
+### The basics
 
-x
+- What HPC is, where it gets used
+- Moore's Law
+- The power wall, and relative power efficiency of multi-core architectures
+- Amdahl's Law
+- Top 500, and how it's changed over time
 
-## Subtopic 1.2
+### Serial and parallel bead sorting by color
 
-### Slide 2.2.1
+::: {.columns align=top}
 
-x
+::: {.column width=50%}
 
-## Subtopic 2.3
+- Reference: [Integrating Parallel and Distributed Computing in Introductory Programming Classes](https://www.csc.tntech.edu/pdcincs/)
+- Separate a set of 500 colored beads by color, using 1, 2, 4, ... people
+- It's tedious for 1 person, so there's motivation and competitiveness to speed things up
+- That leads into concepts of optimization and algorithms in the broadest sense
+- Sorting times lead directly into speedup graphs
 
-### Slide 2.3.1
+:::
+::: {.column width=50%}
 
-x
+![2-processor bead sorting exercise]
 
-## Subtopic 2.4
+[2-processor bead sorting exercise]: figures/bead-sorting.jpg { width=70% }
 
-### Slide 2.4.1
+:::
+:::
 
-x
+## Unix Command Line, Build an HPC
+
+### Software Carpentry's "Introduction to the Unix Command Line"
+
+- Already built for novices who just want to get something done
+- Can be run on student laptops, or on the campus HPC
+- Doesn't come close to preparing students for systems administration, but we can at least refer back to these topics as needed
+
+### Build-An-HPC Workshop
+
+::: {.columns align=top}
+
+::: {.column width=50%}
+
+- Desktop hypervisor download and installation
+- Virtual network configuration
+- Installing a VM for an OpenHPC system management server (SMS)
+- Just enough networking to explain DHCP
+- Installing OpenHPC, building and booting a compute node VM
+- Fixing what wasn't working out of the box (better in 2026 than 2023)
+- Repeating it all on physical hardware
+
+:::
+::: {.column width=50%}
+
+![Non-threatening title slide]
+
+[Non-threatening title slide]: figures/mike-and-sharon-and-jim-and-trevor-build-an-hpc-workshop.png { width=100% }
+
+:::
+:::
+
+## Basics of Parallel Programming
+
+### Basics of Parallel Programming
+
+- Modern Fortran, OpenMP, MPI
+- Monte Carlo method for calculating $\pi$
+- Minimum structured programming concepts required for serial version:
+  - top to bottom order
+  - loops
+  - conditionals
+  - calling functions
+  - data types
+
+### Serial version (16 LoC)
+
+```fortran
+program monte_carlo_serial_pi
+  implicit none
+  real :: x, y, r
+  integer*8 :: i, close_enough = 0_8, total = 1e12_8
+  print *, "# total =", total
+  do i=1, total
+    call random_number(x)
+    call random_number(y)
+    r = sqrt(x*x + y*y)
+    if (r<=1.0) then
+      close_enough = close_enough + 1
+    end if
+  end do
+  print *, "# close_enough =", close_enough, "total =", total
+  print *, "# Pi is approximately", 4.0*close_enough/total
+end program monte_carlo_serial_pi
+```
+
+### New concepts introduced in OpenMP version
+
+- elapsed time measurement (serial code just used `time` utility)
+- `!$omp parallel` statements
+- automatic division of work across CPUs
+- private and shared variables
+- reductions
+
+### OpenMP version (26 LoC, part 1 of 2)
+
+```fortran
+program monte_carlo_openmp_pi
+  use omp_lib
+  implicit none
+  real :: x, y, r
+  integer*8 :: i, close_enough = 0_8, total = 1e9_8
+  integer :: nodes = 1, cpus_per_node
+  double precision :: time_start, time_end
+  print *, "# total =", total
+  time_start = omp_get_wtime()
+!$omp parallel do private(i, x, y, r) reduction(+:close_enough)
+  do i=1, total
+    call random_number(x)
+    call random_number(y)
+    r = sqrt(x*x + y*y)
+```
+
+### OpenMP version (26 LoC, part 2 of 2)
+
+```fortran
+    if (r<=1.0) then
+      close_enough = close_enough + 1
+    end if
+  end do
+  time_end = omp_get_wtime()
+  print *, "# close_enough =", close_enough, "total =", total
+  print *, "# Pi is approximately", 4.0*close_enough/total
+!$omp parallel
+  cpus_per_node = omp_get_num_threads()
+!$omp end parallel
+  print *, nodes, cpus_per_node, time_end-time_start
+end program monte_carlo_openmp_pi
+```
+
+### New concepts introduced in hybrid MPI/OpenMP version
+
+- MPI initialization
+- manual division of work across nodes
+- MPI reductions
+
+### Hybrid MPI/OpenMP version (46 LoC, part 1 of 4)
+
+```fortran
+program monte_carlo_openmp_mpi_pi
+  use omp_lib
+  use mpi
+  implicit none
+  real :: x, y, r
+  integer*8 :: i, close_enough = 0_8, total = 1e9_8
+  integer :: nodes, cpus_per_node, rank, ierr
+  integer*8 :: base_size, bigger_count, my_size, total_close_enough
+  double precision :: time_start, time_end
+
+  call mpi_init(ierr)
+  call mpi_comm_size(MPI_COMM_WORLD, nodes, ierr)
+  call mpi_comm_rank(MPI_COMM_WORLD, rank, ierr)
+```
+
+### Hybrid MPI/OpenMP version (46 LoC, part 2 of 4)
+
+```fortran
+  base_size = total / nodes
+  bigger_count = modulo(total, nodes)
+  print *, "# total =", total, "base_size =", base_size, &
+    "bigger_count =", bigger_count
+  if (rank < bigger_count) then
+    my_size = base_size+1
+    print *, "# rank", rank, &
+      "gets an extra iteration: my_size =", my_size
+  else
+    my_size = base_size
+    print *, "# rank", rank, &
+    "gets no extra iterations: my_size =", my_size
+  end if
+```
+
+### Hybrid MPI/OpenMP version (46 LoC, part 3 of 4)
+
+```fortran
+  time_start = omp_get_wtime()
+!$omp parallel do private(i, x, y, r) reduction(+:close_enough)
+  do i=1, my_size
+    call random_number(x)
+    call random_number(y)
+    r = sqrt(x*x + y*y)
+    if (r<=1.0) then
+      close_enough = close_enough + 1
+    end if
+  end do
+
+  print *, "# rank =", rank, "close_enough =", close_enough, &
+    "my_size =", my_size
+
+```
+
+### Hybrid MPI/OpenMP version (46 LoC, part 4 of 4)
+
+```fortran
+  call mpi_reduce(close_enough, total_close_enough, 1, &
+    mpi_integer8, mpi_sum, 0, MPI_COMM_WORLD, ierr)
+  call mpi_finalize(ierr)
+  time_end = omp_get_wtime()
+
+  if (rank == 0) then
+    print *, "# total_close_enough =", total_close_enough, &
+      "total =", total
+    print *, "# Pi is approximately", 4.0*total_close_enough/total
+!$omp parallel
+    cpus_per_node = omp_get_num_threads()
+!$omp end parallel
+    print *, nodes, cpus_per_node, time_end-time_start
+  end if
+end program monte_carlo_openmp_mpi_pi
+```
+
+## Careers in Research Computing
+
+### Careers in Research Computing
+
+- In 2026, we finally got our dedicated Research Computing and Data division in ITS
+- We call ourselves RCD instead of HPC for a reason
+- We also realized that the GSET students, their teachers, their guidance counselors, and their families would likely have no idea how broad our field is
+- Mike, Sharon, Jim, and Trevor also:
+  - come from widely different academic backgrounds and life experiences
+  - have widely different skill sets and vocational passions
+- All of this got us to spend an afternoon talking about how:
+  - we all fit into a cohesive RCD group
+  - we don't have to be experts in everything
+  - **our users are better** at their respective specialties
+  - **we're better** at adapting technology to their needs
+
+### And it stuck with them
+
+![Student presentation section about RCD careers]
+
+[Student presentation section about RCD careers]: figures/gset-facings.jpg { width=80% }
+
 
 # What We Learned From Projects
 
@@ -156,11 +379,30 @@ x
 
 - This one was much harder than we expected
 - Enormously larger solution space than Lunar Lander
+- We got out of our own depth on guessing what kind of neural network could be trained in a feasible amount of time
 
-## 2026: Image recognition (MNIST, Let's Draw)
+## 2026: Image recognition (MNIST, Google "Quick, Draw!")
 
 - This one was also harder than we expected
+- Didn't have time to make a good visualization or interactive demo: would have loved to show their neural network classifying other students' drawings in real time
+- Wound up being able to show improved classification performance during training, but not much more
 
 # Wrapping Up
 
-x
+::: {.columns align=center}
+
+::: {.column width=70%}
+- HPC and RCD topics are within high school students' reach
+- Be ready for things to go wrong
+- Let the students see you fail sometimes
+- Contact us if you have questions:
+  - `{renfro,scolson,jmoroney,sw-tlclark}@tntech.edu`
+  - `researchcomputing@tntech.edu`
+  - [`www.rcd.tntech.edu`](https://www.rcd.tntech.edu/)
+:::
+
+::: {.column width=30%}
+![RCD website](figures/qr-www-rcd-tntech-edu.png)
+:::
+:::
+
