@@ -12,7 +12,7 @@ institute:
 title: Teaching HPC to Advanced High School Students at a Summer Program
 shorttitle: Teaching HPC at an Advanced High School Student Program
 subtitle: Governor's School for Emerging Technologies
-date: 2026-11-15 (or 16 or 20)
+date: HPCSYSPROS26, 2026-11-16
 ---
 
 # Governor's School for Emerging Technologies
@@ -323,7 +323,7 @@ end program monte_carlo_openmp_mpi_pi
 
 ### Careers in Research Computing
 
-- In 2026, we finally got our dedicated Research Computing and Data division in ITS
+- In 2025, we finally got our dedicated Research Computing and Data division in ITS
 - We call ourselves RCD instead of HPC for a reason
 - We also realized that the GSET students, their teachers, their guidance counselors, and their families would likely have no idea how broad our field is
 - Mike, Sharon, Jim, and Trevor also:
@@ -341,6 +341,28 @@ end program monte_carlo_openmp_mpi_pi
 
 [Student presentation section about RCD careers]: figures/gset-facings.jpg { width=80% }
 
+### CaRCC's *Onramps to the RCD Field*
+
+::: {.columns align=top}
+
+::: {.column width=70%}
+
+- Sharon, Jim, and several dozen other people attended a full-day track of CaRCC's RCD Nexus Day at PEARC26.
+- The result of that day was CaRCC's *Onramps to the RCD Field: A Guide to Careers in Research Computing and Data*
+- Intended audience is primarily people outside reseach computing:
+  - students (high school or college)
+  - guidance counsleors, career counselors
+  - folks considering a career change
+  - faculty and administrators building career pipelines
+
+:::
+
+::: {.column width=30%}
+
+![CaRCC's *Onramps to the RCD Field*](figures/qr-onramps-guide.png)
+
+:::
+:::
 
 # What We Learned From Projects
 
